@@ -19,17 +19,8 @@ namespace Alura.ListaLeitura.App
             host.Run();
 
 
-            //ImprimeLista(_repo.ParaLer);
-            //ImprimeLista(_repo.Lendo);
-            //ImprimeLista(_repo.Lidos);
-
+        
             Console.ReadKey();
         }
-
-        static void ImprimeLista(ListaDeLeitura lista)
-        {
-            Console.WriteLine(lista);
-        }
-
     }
 }
