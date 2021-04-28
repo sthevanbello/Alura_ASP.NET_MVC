@@ -21,6 +21,9 @@
     <None Update="HTML\lidos.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="HTML\lista.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="HTML\paraler.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
