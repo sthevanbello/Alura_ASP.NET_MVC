@@ -70,8 +70,8 @@ namespace Alura.ListaLeitura.App
         {
             var livro = new Livro()
             {
-                Titulo = context.Request.Query["Titulo"].First(),
-                Autor = context.Request.Query["Autor"].First()
+                Titulo = context.Request.Form["Titulo"].First(), //Com o method="post" no html os dados são passados por .Form e não por .Query
+                Autor = context.Request.Form["Autor"].First()
             };
 
             var repo = new LivroRepositorioCSV();
@@ -83,7 +83,7 @@ namespace Alura.ListaLeitura.App
 
         private Task ExibeFormulario(HttpContext context)
         {
-            var html = CarregaHTML("formulario"); 
+            var html = CarregaHTML("Formulario"); 
             return context.Response.WriteAsync(html);
         }
 
@@ -91,6 +91,7 @@ namespace Alura.ListaLeitura.App
         {
             //D:/Developer/Alura/Asp.NET Core Uma webapp usando o padrão MVC/Alura.ListaLeitura/Alura.ListaLeitura.App/
             //var nomeCompletoArquivo = $"../../../HTML/{NomeArquivo}.html";
+
             var nomeCompletoArquivo = $"HTML/{NomeArquivo}.html";
             using (var arquivo = File.OpenText(nomeCompletoArquivo))
             {
