@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,6 +29,8 @@ namespace Alura.ListaLeitura.App
             routeBuilder.MapRoute("Livros/Lidos", LivrosLidos);
             routeBuilder.MapRoute("Cadastro/NovoLivro/{Titulo}/{Autor}", NovoLivrosParaLer);
             routeBuilder.MapRoute("Livros/Detalhes/{id:int}", ExibeDetalhes);
+            routeBuilder.MapRoute("Cadastro/NovoLivro", ExibeFormulario);
+            routeBuilder.MapRoute("Cadastro/Incluir", ProcessaFormulario);
 
             //Constrói a rota completa através do método Build()
             var rotas = routeBuilder.Build();
@@ -37,7 +40,7 @@ namespace Alura.ListaLeitura.App
             //app.Run(Roteamento);
         }
 
-
+        
 
         public Task Roteamento(HttpContext context)
         {
@@ -62,6 +65,39 @@ namespace Alura.ListaLeitura.App
 
 
         }
+
+        private Task ProcessaFormulario(HttpContext context)
+        {
+            var livro = new Livro()
+            {
+                Titulo = context.Request.Query["Titulo"].First(),
+                Autor = context.Request.Query["Autor"].First()
+            };
+
+            var repo = new LivroRepositorioCSV();
+
+            repo.Incluir(livro);
+
+            return context.Response.WriteAsync("O livro foi adicionado com sucesso");
+        }
+
+        private Task ExibeFormulario(HttpContext context)
+        {
+            var html = CarregaHTML("formulario"); 
+            return context.Response.WriteAsync(html);
+        }
+
+        private string CarregaHTML(string NomeArquivo)
+        {
+            //D:/Developer/Alura/Asp.NET Core Uma webapp usando o padrão MVC/Alura.ListaLeitura/Alura.ListaLeitura.App/
+            //var nomeCompletoArquivo = $"../../../HTML/{NomeArquivo}.html";
+            var nomeCompletoArquivo = $"HTML/{NomeArquivo}.html";
+            using (var arquivo = File.OpenText(nomeCompletoArquivo))
+            {
+                return arquivo.ReadToEnd();
+            }
+        }
+
         private Task ExibeDetalhes(HttpContext context)
         {
             int id = Convert.ToInt32(context.GetRouteValue("id"));
