@@ -65,5 +65,10 @@ namespace Alura.ListaLeitura.App.Logica
             await context.Response.WriteAsync(html);
         }
 
+        public static Task Teste(HttpContext context)
+        {
+            return context.Response.WriteAsync("Funcionalidade nova foi implementada");
+        }
+
     }
 }
