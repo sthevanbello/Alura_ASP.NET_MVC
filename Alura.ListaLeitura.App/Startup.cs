@@ -40,7 +40,7 @@ namespace Alura.ListaLeitura.App
             //app.Run(Roteamento);
         }
 
-        
+
 
         public Task Roteamento(HttpContext context)
         {
@@ -81,10 +81,10 @@ namespace Alura.ListaLeitura.App
             return context.Response.WriteAsync("O livro foi adicionado com sucesso");
         }
 
-        private Task ExibeFormulario(HttpContext context)
+        private async Task ExibeFormulario(HttpContext context)
         {
-            var html = CarregaHTML("Formulario"); 
-            return context.Response.WriteAsync(html);
+            var html = CarregaHTML("Formulario");
+            await context.Response.WriteAsync(html);
         }
 
         private string CarregaHTML(string NomeArquivo)
@@ -133,18 +133,48 @@ namespace Alura.ListaLeitura.App
         public async Task LivrosParaLer(HttpContext context)
         {
             var _repo = new LivroRepositorioCSV();
-            await context.Response.WriteAsync(_repo.ParaLer.ToString());
+
+            //await context.Response.WriteAsync(_repo.ParaLer.ToString());
+            //D:\Developer\Alura\Asp.NET Core Uma webapp usando o padrão MVC\Alura.ListaLeitura\Alura.ListaLeitura.App\HTML\paraler.html
+
+            var html = CarregaHTML("paraler");
+
+            foreach (var item in _repo.ParaLer.Livros)
+            {
+                html = html.Replace("#substituir#", $"<li>{item.Titulo} - {item.Autor}</li>#substituir#");
+            }
+            html = html.Replace("#substituir#", "");
+
+            await context.Response.WriteAsync(html);
         }
 
         public async Task LivrosLidos(HttpContext context)
         {
             var _repo = new LivroRepositorioCSV();
-            await context.Response.WriteAsync(_repo.Lidos.ToString());
+
+            var html = CarregaHTML("lidos");
+
+            foreach (var item in _repo.Lidos.Livros)
+            {
+                html = html.Replace("#substituir#", $"<li>{item.Titulo} - {item.Autor}</li>#substituir#");
+            }
+            html = html.Replace("#substituir#", "");
+
+            await context.Response.WriteAsync(html);
         }
         public async Task LivrosLendo(HttpContext context)
         {
             var _repo = new LivroRepositorioCSV();
-            await context.Response.WriteAsync(_repo.Lendo.ToString());
+
+            var html = CarregaHTML("lendo");
+
+            foreach (var item in _repo.Lendo.Livros)
+            {
+                html = html.Replace("#substituir#", $"<li>{item.Titulo} - {item.Autor}</li>#substituir#");
+            }
+            html = html.Replace("#substituir#", "");
+
+            await context.Response.WriteAsync(html);
         }
     }
 }
