@@ -9,8 +9,6 @@ namespace Alura.ListaLeitura.App
     {
         static void Main(string[] args)
         {
-            var _repo = new LivroRepositorioCSV();
-
             IWebHost host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
@@ -19,7 +17,7 @@ namespace Alura.ListaLeitura.App
             host.Run();
 
 
-        
+
             Console.ReadKey();
         }
     }

@@ -7,7 +7,10 @@
 </head>
 <body>
     <ul>
-        #substituir#
+        @foreach (var item in ViewBag.Livros)
+        {
+                <li>@item.Titulo - @item.Autor</li>
+        }
     </ul>
 </body>
 </html>
